@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Pintek | New Pin</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:700,500,400,300,100|Comfortaa" rel="stylesheet">
+		<link rel='stylesheet' type='text/css' href='../public/styles/newpin.css'>
+    	<link rel="icon" href='../public/images/pin.png'>
+	</head>
+
+	<body>
+		<div class='background'>
+			<div class="navbar-container">
+				<% include ./partials/navbar %>
+			</div>
+
+			<div class="main-container">
+				<div class='form-outline'>
+					<div class='form-holder'>
+						<div class='title'>Create a New Pin</div>
+						<form action='/new-pin' method='POST'>
+							<input type="text" name='title' placeholder="Pin Title " class='pin-title-input' required>
+							<input type="text" name='url' placeholder="Image URL" class='pin-title-input' required>
+							<button type='submit'>Submit</button>
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<footer>
+				<% include ./partials/footer %>
+			</footer>
+		</div>
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script src='../public/js/navbar.js'></script>
+		<script src='../public/js/newpoll.js'></script>
+	</body>
+</html>

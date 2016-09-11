@@ -1,0 +1,31 @@
+<div class="navbar">
+	<div class='destination'>
+		<a class='logo-holder' href='../'>
+			<svg class='logo' version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="32" height="32" viewBox="0 0 32 32">
+				<path class="path1" d="m 15,0 3,3 -3,3 7,8 7,0 -5.5,5.5 L 32,30.769 32,32 30.769,32 19.5,23.5 14,29 14,22 6,15 3,18 0,15 15,0 Z m 3,17 2,-2 -7,-7 -2,2 7,7 z"></path>
+			</svg>
+          <div class='logo-name'>Pintek</div>
+        </a>
+	</div>
+	<div class='destination'>
+		<% if(userInfo) { %>
+			<div class='user-interface'>
+				<div class="user-info">
+					<img src=<%- userInfo['profile_image_url_https'] %> class='user-image'>
+				</div>
+				<div class="dropdown-arrow"></div>
+				<div class="dropdown-arrow-shadow"></div>
+				<div class="dropdown">
+					<div class='username'><%= userInfo['screen_name'] %></div>
+					<a href='../mypins'>My Pins</a>
+					<a href='../newpin'>New Pin</a>
+					<a href='../sign-out'>Sign Out</a>
+				</div>
+			</div>
+		<% } else { %>
+			<div class="sign-in">
+				<a href='../request-token'>Sign in</a>
+			</div>
+		<% } %>
+	</div>
+</div>

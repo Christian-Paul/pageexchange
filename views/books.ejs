@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Pintek | <%- pinsAuthor %>'s polls</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:700,500,400,300,100|Comfortaa" rel="stylesheet">
+		<link rel='stylesheet' type='text/css' href='../public/styles/style.css'>
+    	<link rel="icon" href='../public/images/pin.png'>
+	</head>
+
+	<body>
+
+		<div class="background">
+			<div class="navbar-container">
+				<% include ./partials/navbar %>
+			</div>
+
+			<div class='main-container'>
+				<div class="title">Here are <%- pinsAuthor %>'s pins</div>
+				<div class="grid">
+					<% for(var i = 0; i < pins.length; i++) { %>
+						<div class="grid-item">
+							<img class="pin-img" src=<%- pins[i].url %> onerror='this.onerror=null;this.src="../public/images/unavailable.png"'>
+							<div class="pin-title"> <%- pins[i].title %> </div>
+							<a href=<%- 'userpins/' + pins[i].username %> class="pin-user"> <%- pins[i].username %> </a>
+							<% if(userInfo && pins[i].username === userInfo['screen_name']) { %>
+								<a href=<%- 'delete-pin/' + pins[i]['_id'] %> class="delete">Delete Pin</a>
+							<% } %>
+						</div>
+					<% } %>
+				</div>
+			</div>
+
+			<footer>
+				<% include ./partials/footer %>
+			</footer>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script src='../public/js/navbar.js'></script>
+		<script src='../public/js/script.js'></script>
+	</body>
+</html>
