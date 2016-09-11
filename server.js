@@ -109,9 +109,33 @@ app.listen(port, function(req, res) {
 	console.log('listening on 3000');
 });
 
-
+// index page describes site and has button to take user to all books
 app.get('/', function(req, res) {
+	res.render('index.ejs', { userInfo: req.session.userInfo });
+});
 
-	res.send('hello');
+
+// queries database for all books and displays results
+app.get('/all-books', function(req, res) {
+	res.render('books.ejs', { userInfo: req.session.userInfo });
+});
+
+// page for adding new books
+app.get('/new-book', function(req, res) {
+
+});
+
+// add new book to the database
+app.post('/new-book', function(req, res) {
+
+});
+
+// shows all of a user's trades
+app.get('/my-trades', function(req, res) {
+
+});
+
+// displays user information and allows them to change it
+app.get('/user-info', function(req, res) {
 
 });
