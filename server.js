@@ -103,6 +103,18 @@ app.get('/sign-out', function(req, res) {
 mongoose.connect('mongodb://' + config.mongooseUsername + ':' + config.mongoosePassword + '@ds029456.mlab.com:29456/pageexchange');
 var Schema = mongoose.Schema;
 
+var bookSchema = new Schema({
+	title: String,
+	imageUrl: String,
+	owner: String,
+	tradeInfo: {
+		sender: String,
+		status: String
+	}
+});
+
+var Book = mongoose.model('Book', bookSchema);
+
 
 // begin app
 app.listen(port, function(req, res) {
@@ -122,12 +134,18 @@ app.get('/all-books', function(req, res) {
 
 // page for adding new books
 app.get('/new-book', function(req, res) {
-
+	res.render('newbook.ejs', { userInfo: req.session.userInfo });
 });
 
 // add new book to the database
 app.post('/new-book', function(req, res) {
-
+	Book.create({ title: req.body.title }, function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			res.render('newbook.ejs', { userInfo: req.session.userInfo });
+		}
+	})
 });
 
 // shows all of a user's trades
