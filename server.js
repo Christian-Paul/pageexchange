@@ -261,9 +261,35 @@ app.get('/request-trade/:tagId', function(req, res) {
 	})
 });
 
+// accept a trade
+app.get('/accept-trade/:tagId', function(req, res) {
+	Book.findByIdAndUpdate( req.params.tagId, { $set: { 'tradeInfo.status': 'accepted' } }, function(err) {
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/my-trades');
+		}
+	});
+});
+
 // shows all of a user's trades
 app.get('/my-trades', function(req, res) {
-
+	var user = req.session.userInfo.screen_name;
+	// query database for sent trades
+	Book.find( { 'tradeInfo.sender': user }, function(err, sentTrades) {
+		if(err) {
+			console.log(err);
+		} else {
+			// query database for received trades
+			Book.find( { owner: user, 'tradeInfo.status': { $ne: 'none' } }, function(err, receivedTrades) {
+				if(err) {
+					console.log(err);
+				} else {
+					res.render('trades.ejs', { userInfo: req.session.userInfo, sentTrades: sentTrades, receivedTrades: receivedTrades });
+				}
+			});
+		}
+	});
 });
 
 // displays user information and allows them to change it

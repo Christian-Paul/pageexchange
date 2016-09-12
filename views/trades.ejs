@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Page Exchange | All Books</title>
+		<link href="https://fonts.googleapis.com/css?family=Roboto:700,500,400,300,100|Comfortaa" rel="stylesheet">
+		<link rel='stylesheet' type='text/css' href='../public/styles/trades.css'>
+    	<link rel="icon" href='../public/images/pin.png'>
+	</head>
+
+	<body>
+
+		<div class="background">
+			<div class="navbar-container">
+				<% include ./partials/navbar %>
+			</div>
+
+			<div class='main-container'>
+				<div class="trades-container">
+					<div class="trades-title">Your Trades</div>
+					<div class="trades">
+						<div class="received-trades-title">Received Trades</div>
+						<div class="received-trades">
+							<% for(var i = 0; i < receivedTrades.length; i++) { %>
+
+								<div class="trade">
+									<%- receivedTrades[0].title %>
+
+									<!-- if the trade hasn't been accepted, show accept button. otherwise show 'accepted' -->
+									<% if(receivedTrades[i].tradeInfo.status !== 'accepted') { %>
+										<a href=<%- 'accept-trade/' + receivedTrades[i]._id %> class="accept-trade">Accept Trade</a>
+									<% } else { %>
+										<div class="accepted">Accepted</div>
+									<% } %>
+								</div>
+
+							<% } %>
+						</div>
+
+						<div class="sent-trades-title">Sent Trades</div>
+						<div class="sent-trades">
+							<% for(var i = 0; i < sentTrades.length; i++) { %>
+
+								<div class="trade">
+									<%- sentTrades[0].title %>
+								</div>
+
+							<% } %>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<footer>
+				<% include ./partials/footer %>
+			</footer>
+		</div>
+
+		<script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+		<script src='../public/js/navbar.js'></script>
+		<script src='../public/js/script.js'></script>
+	</body>
+</html>
