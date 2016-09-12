@@ -41,6 +41,36 @@ app.use(session(sessionOptions));
 app.use('/public', express.static(path.join(__dirname, 'public')));
 app.use(bodyParser.urlencoded({extended: true}));
 
+// database setup
+mongoose.connect('mongodb://' + config.mongooseUsername + ':' + config.mongoosePassword + '@ds029456.mlab.com:29456/pageexchange');
+var Schema = mongoose.Schema;
+
+var bookSchema = new Schema({
+	title: String,
+	imageUrl: String,
+	owner: String,
+	tradeInfo: {
+		sender: String,
+		status: String
+	}
+});
+
+var userSchema = new Schema({
+	screen_name: String,
+	details: {
+		name: {
+			first: { type: String, default: 'none' },
+			last: { type: String, default: 'none' }
+		},
+		city: { type: String, default: 'none' },
+		state: { type: String, default: 'none' }
+	}
+});
+
+var User = mongoose.model('User', userSchema);
+
+var Book = mongoose.model('Book', bookSchema);
+
 
 // twitter oAuth setup
 var twitter = new Twitter({
@@ -81,7 +111,16 @@ app.get('/login/twitter/callback', function(req, res) {
                 		if(err) {
                 			console.log(err);
                 		} else {
-                			res.redirect('/');
+                			// if login is successful
+                			// if user already exists, do nothing
+                			// if user doesn't exist, add new user doc
+                			User.update( { screen_name: user.screen_name }, {$setOnInsert: { screen_name: user.screen_name } }, {upsert: true, setDefaultsOnInsert: true}, function(err) {
+                				if(err) {
+                					console.log(err);
+                				} else {
+                					res.redirect('/');
+                				}
+                			})
                 		}
                 	});
                 }
@@ -100,22 +139,6 @@ app.get('/sign-out', function(req, res) {
 		}
 	})
 });
-
-// database setup
-mongoose.connect('mongodb://' + config.mongooseUsername + ':' + config.mongoosePassword + '@ds029456.mlab.com:29456/pageexchange');
-var Schema = mongoose.Schema;
-
-var bookSchema = new Schema({
-	title: String,
-	imageUrl: String,
-	owner: String,
-	tradeInfo: {
-		sender: String,
-		status: String
-	}
-});
-
-var Book = mongoose.model('Book', bookSchema);
 
 
 // begin app
@@ -139,7 +162,7 @@ app.get('/all-books', function(req, res) {
 			res.render('books.ejs', { userInfo: req.session.userInfo, books: books });
 		}
 	});
-	
+
 });
 
 // shows users their own books and lets them add new books
@@ -228,5 +251,35 @@ app.get('/my-trades', function(req, res) {
 
 // displays user information and allows them to change it
 app.get('/user-info', function(req, res) {
+	User.findOne( { screen_name: req.session.userInfo.screen_name }, function(err, user) {
+		if(err) {
+			console.log(err);
+		} else {
+			res.render('settings.ejs', { userInfo: req.session.userInfo, user: user });
+		}
+	})
+});
+
+// updates user info
+app.post('/update-details', function(req, res) {
+
+	var input = req.body;
+
+	var updateObj = {
+		name: {
+			first: input['first-name'],
+			last: input['last-name']
+		},
+		city: input['city'],
+		state: input['state']
+	};
+
+	User.findOneAndUpdate( { screen_name: req.session.userInfo.screen_name }, { $set: { details: updateObj } }, function(err, user){
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/user-info');
+		}
+	});
 
 });

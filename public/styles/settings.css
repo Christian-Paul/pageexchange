@@ -1,0 +1,279 @@
+footer {
+  display: flex;
+  width: 100%;
+  background-color: #b0bec5;
+  justify-content: center;
+  align-items: center;
+  height: 5em; }
+  footer .info-container {
+    width: 95%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center; }
+    footer .info-container .text-container {
+      display: flex;
+      flex-direction: column;
+      font-size: 0.9rem; }
+      footer .info-container .text-container .source a, footer .info-container .text-container .signature a {
+        text-decoration: none;
+        color: #f5f5f5;
+        transition: color 250ms ease; }
+      footer .info-container .text-container .source a:hover, footer .info-container .text-container .signature a:hover {
+        color: #fff; }
+    footer .info-container .icons-container {
+      display: flex;
+      justify-content: space-between; }
+      footer .info-container .icons-container .icon + .icon {
+        margin-left: 1.5rem; }
+      footer .info-container .icons-container .icon {
+        display: flex;
+        justify-content: center;
+        align-items: center; }
+        footer .info-container .icons-container .icon .linkedin-svg, footer .info-container .icons-container .icon .github-svg, footer .info-container .icons-container .icon .link-svg {
+          fill: #6f7476;
+          transition: 0.35s ease all;
+          height: 2rem;
+          width: 2rem; }
+@media(min-width: 700px) {
+  footer .info-container .icons-container .icon .linkedin-svg, footer .info-container .icons-container .icon .github-svg, footer .info-container .icons-container .icon .link-svg {
+    height: 2.5rem;
+    width: 2.5rem; } }
+        footer .info-container .icons-container .icon .linkedin-svg:hover, footer .info-container .icons-container .icon .github-svg:hover, footer .info-container .icons-container .icon .link-svg:hover {
+          fill: #515556; }
+
+.navbar-container {
+  width: 100%;
+  background-color: #fff;
+  color: #777;
+  position: fixed;
+  top: 0;
+  box-shadow: 0px 10px 10px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 250ms ease;
+  font-weight: 500;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center;
+  z-index: 1; }
+  .navbar-container .navbar {
+    width: 95%;
+    display: flex;
+    justify-content: space-between; }
+    .navbar-container .navbar .destination:hover {
+      color: #D46B68; }
+    .navbar-container .navbar .destination {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      transition: color 250ms ease; }
+      .navbar-container .navbar .destination .logo-holder {
+        width: auto; }
+      .navbar-container .navbar .destination > a {
+        text-decoration: none;
+        color: #777;
+        height: 4.5rem;
+        width: 6rem;
+        display: flex;
+        align-items: center;
+        justify-content: center; }
+        .navbar-container .navbar .destination > a .logo {
+          fill: #AA3B38;
+          transition: fill 250ms ease;
+          margin-right: 0.5rem;
+          height: 2rem;
+          width: auto; }
+        .navbar-container .navbar .destination > a .logo-name {
+          color: #AA3B38;
+          transition: color 250ms ease;
+          text-transform: none;
+          font-size: 1.5rem;
+          font-family: "Comfortaa"; }
+      .navbar-container .navbar .destination a:hover .logo {
+        fill: #D46B68; }
+      .navbar-container .navbar .destination a:hover .logo-name {
+        color: #D46B68; }
+      .navbar-container .navbar .destination .user-interface {
+        cursor: pointer;
+        display: flex;
+        height: 4.5rem; }
+        .navbar-container .navbar .destination .user-interface .user-info {
+          display: flex;
+          align-items: center; }
+          .navbar-container .navbar .destination .user-interface .user-info .user-image {
+            border-radius: 0.1rem; }
+        .navbar-container .navbar .destination .user-interface .dropdown-arrow {
+          position: absolute;
+          height: 0;
+          width: 0;
+          top: 4.5rem;
+          right: calc(50% - 0.5rem);
+          z-index: 2; }
+        .navbar-container .navbar .destination .user-interface .dropdown-arrow-shadow {
+          position: absolute;
+          height: 0;
+          width: 0;
+          top: 4.44rem;
+          right: calc(50% - 0.5rem); }
+        .navbar-container .navbar .destination .user-interface .dropdown {
+          position: absolute;
+          top: 5rem;
+          right: 0;
+          display: flex;
+          min-width: 9rem; }
+          .navbar-container .navbar .destination .user-interface .dropdown a, .navbar-container .navbar .destination .user-interface .dropdown .username {
+            display: none; }
+      .navbar-container .navbar .destination .user-interface.triggered .dropdown-arrow-shadow {
+        border-left: 0.5rem solid transparent;
+        border-right: 0.5rem solid transparent;
+        border-bottom: 0.5rem solid rgba(0, 0, 0, 0.2); }
+      .navbar-container .navbar .destination .user-interface.triggered .dropdown-arrow {
+        border-left: 0.5rem solid transparent;
+        border-right: 0.5rem solid transparent;
+        border-bottom: 0.5rem solid #fff; }
+      .navbar-container .navbar .destination .user-interface.triggered .dropdown-arrow, .navbar-container .navbar .destination .user-interface.triggered .dropdown-arrow-shadow, .navbar-container .navbar .destination .user-interface.triggered .dropdown > a, .navbar-container .navbar .destination .user-interface.triggered .username {
+        opacity: 0;
+        animation-name: menu1;
+        animation-duration: 150ms;
+        animation-timing-function: ease-in-out;
+        animation-fill-mode: forwards; }
+@keyframes menu1 {
+  0% {
+    opacity: 0; }
+  100% {
+    opacity: 1; } }
+      .navbar-container .navbar .destination .user-interface.triggered .dropdown {
+        display: flex;
+        flex-direction: column;
+        height: 13.5rem;
+        box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.2); }
+        .navbar-container .navbar .destination .user-interface.triggered .dropdown a, .navbar-container .navbar .destination .user-interface.triggered .dropdown .username {
+          height: 4.5rem;
+          background-color: #fff;
+          width: 100%;
+          display: flex;
+          justify-content: center;
+          position: relative;
+          text-decoration: none;
+          color: #777;
+          align-items: center;
+          transition: background-color 250ms ease; }
+        .navbar-container .navbar .destination .user-interface.triggered .dropdown a:hover {
+          background-color: #eee; }
+        .navbar-container .navbar .destination .user-interface.triggered .dropdown .username {
+          cursor: default; }
+        .navbar-container .navbar .destination .user-interface.triggered .dropdown .username:after {
+          content: "";
+          position: absolute;
+          width: 50%;
+          left: 25%;
+          bottom: 0%;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.2); }
+      .navbar-container .navbar .destination .sign-in {
+        background-color: #AA3B38;
+        transition: background-color 250ms ease;
+        border-radius: 0.1rem; }
+        .navbar-container .navbar .destination .sign-in a {
+          text-decoration: none;
+          color: #fff;
+          height: 2.75rem;
+          width: 6.5rem;
+          display: flex;
+          align-items: center;
+          justify-content: center; }
+      .navbar-container .navbar .destination .sign-in:hover {
+        background-color: #D46B68; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #eee;
+  font-family: "Roboto", Helvetica, Arial;
+  font-weight: 300;
+  height: 100%; }
+  html .background, body .background {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%; }
+    html .background .main-container, body .background .main-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      flex: 1;
+      margin-top: 8rem; }
+      html .background .main-container .display-container, body .background .main-container .display-container {
+        height: 100%;
+        width: 80%;
+        max-width: 575px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        margin-bottom: 4rem;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25); }
+        html .background .main-container .display-container .display-title, body .background .main-container .display-container .display-title {
+          font-size: 3rem; }
+        html .background .main-container .display-container .display, body .background .main-container .display-container .display {
+          margin-top: 0.75rem;
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          width: 80%; }
+      html .background .main-container .form-outline, body .background .main-container .form-outline {
+        height: 100%;
+        width: 80%;
+        max-width: 575px;
+        background-color: #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 1.5rem;
+        padding-bottom: 2.5rem;
+        margin-bottom: 4rem;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25); }
+        html .background .main-container .form-outline .form-holder, body .background .main-container .form-outline .form-holder {
+          display: flex;
+          flex-direction: column;
+          width: 80%;
+          height: 100%; }
+          html .background .main-container .form-outline .form-holder .title, body .background .main-container .form-outline .form-holder .title {
+            font-size: 3em;
+            text-align: center; }
+          html .background .main-container .form-outline .form-holder form, body .background .main-container .form-outline .form-holder form {
+            margin-top: 1rem;
+            display: flex;
+            flex-direction: column; }
+            html .background .main-container .form-outline .form-holder form .pin-title-input, body .background .main-container .form-outline .form-holder form .pin-title-input {
+              font-size: 1em; }
+            html .background .main-container .form-outline .form-holder form input, body .background .main-container .form-outline .form-holder form input {
+              height: 2.5rem;
+              padding-left: 0.25rem;
+              font-weight: 100; }
+            html .background .main-container .form-outline .form-holder form input + input, body .background .main-container .form-outline .form-holder form input + input {
+              margin-top: 0.75rem; }
+            html .background .main-container .form-outline .form-holder form button, body .background .main-container .form-outline .form-holder form button {
+              font-size: 1rem;
+              font-weight: 300;
+              margin-top: 1.5rem;
+              height: 2.75rem;
+              width: 6.5rem;
+              display: flex;
+              align-self: center;
+              justify-content: center;
+              align-items: center;
+              background-color: #AA3B38;
+              color: #fff;
+              border: none;
+              cursor: pointer;
+              border-radius: 0.1rem;
+              transition: background-color 250ms ease; }
+            html .background .main-container .form-outline .form-holder form button:hover, body .background .main-container .form-outline .form-holder form button:hover {
+              background-color: #D46B68; }
+
+/*# sourceMappingURL=settings.css.map */
