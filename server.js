@@ -134,9 +134,18 @@ app.get('/all-books', function(req, res) {
 	res.render('books.ejs', { userInfo: req.session.userInfo });
 });
 
-// page for adding new books
+// shows users their own books and lets them add new books
 app.get('/new-book', function(req, res) {
-	res.render('newbook.ejs', { userInfo: req.session.userInfo });
+	// query database for books the user owns
+
+	Book.find( { owner: req.session.userInfo['screen_name'] }, function(err, books) {
+		if(err) {
+			console.log(err);
+		} else {
+			console.log(books);
+			res.render('newbook.ejs', { userInfo: req.session.userInfo, books: books });
+		}
+	});
 });
 
 // add new book to the database
@@ -145,7 +154,7 @@ app.post('/new-book', function(req, res) {
 	var title = req.body.title;
 
 	// send request to google books api to obtain google book id using title
-	https.get('https://www.googleapis.com/books/v1/volumes?q=intitle:' + title + '&key=' + config.googleBooksApiKey, function(response) {
+	https.get('https://www.googleapis.com/books/v1/volumes?q=' + title + '&key=' + config.googleBooksApiKey, function(response) {
 		response.setEncoding('utf8');
 		response.on('data', function(chunk) {
 			if(idResponse) {
@@ -188,7 +197,7 @@ app.post('/new-book', function(req, res) {
 							console.log(err);
 						} else {
 							// send user back to new book page
-							res.render('newbook.ejs', { userInfo: req.session.userInfo });
+							res.redirect('new-book');
 						}
 					});
 
@@ -202,7 +211,6 @@ app.post('/new-book', function(req, res) {
 	}).on('error', function(err) {
 		console.log(err);
 	});
-
 });
 
 // shows all of a user's trades
