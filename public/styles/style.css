@@ -202,5 +202,38 @@ html, body {
       margin-top: 8rem;
       flex: 1;
       width: 100%; }
+      html .background .main-container .books-container, body .background .main-container .books-container {
+        height: 100%;
+        width: 80%;
+        max-width: 575px;
+        background-color: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        align-items: center;
+        margin-top: 2rem;
+        margin-bottom: 4rem;
+        padding-top: 1.5rem;
+        padding-bottom: 1.5rem;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.25); }
+        html .background .main-container .books-container .books-title, body .background .main-container .books-container .books-title {
+          font-size: 2rem; }
+        html .background .main-container .books-container .books, body .background .main-container .books-container .books {
+          margin-top: 0.75rem;
+          display: flex;
+          justify-content: space-around;
+          flex-wrap: wrap;
+          width: 80%; }
+          html .background .main-container .books-container .books .book, body .background .main-container .books-container .books .book {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 1rem; }
+            html .background .main-container .books-container .books .book .book-cover, body .background .main-container .books-container .books .book .book-cover {
+              width: 7.5rem;
+              height: 12rem; }
+            html .background .main-container .books-container .books .book .book-title, body .background .main-container .books-container .books .book .book-title {
+              margin-top: 0.5rem; }
 
 /*# sourceMappingURL=style.css.map */

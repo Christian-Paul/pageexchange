@@ -131,7 +131,15 @@ app.get('/', function(req, res) {
 
 // queries database for all books and displays results
 app.get('/all-books', function(req, res) {
-	res.render('books.ejs', { userInfo: req.session.userInfo });
+
+	Book.find( {} , function(err, books){
+		if(err) {
+			console.log(err);
+		} else {
+			res.render('books.ejs', { userInfo: req.session.userInfo, books: books });
+		}
+	});
+	
 });
 
 // shows users their own books and lets them add new books

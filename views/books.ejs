@@ -16,18 +16,18 @@
 			</div>
 
 			<div class='main-container'>
-				<div class="title">All books</div>
-				<div class="grid">
-					<% for(var i = 0; i < pins.length; i++) { %>
-						<div class="grid-item">
-							<img class="pin-img" src=<%- pins[i].url %> onerror='this.onerror=null;this.src="../public/images/unavailable.png"'>
-							<div class="pin-title"> <%- pins[i].title %> </div>
-							<a href=<%- 'userpins/' + pins[i].username %> class="pin-user"> <%- pins[i].username %> </a>
-							<% if(userInfo && pins[i].username === userInfo['screen_name']) { %>
-								<a href=<%- 'delete-pin/' + pins[i]['_id'] %> class="delete">Delete Pin</a>
-							<% } %>
+				<div class="books-container">
+					<div class="books-title">All Books</div>
+					<div class="books">
+						<% for(var i = 0; i < books.length; i++) { %>
+
+						<div class="book">
+							<img class='book-cover' src=<%- books[i].imageUrl %> >
+							<div class="book-title"> <%- books[i].title %> </div>
 						</div>
-					<% } %>
+
+						<% } %>
+					</div>
 				</div>
 			</div>
 
