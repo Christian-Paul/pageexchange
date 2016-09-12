@@ -6,6 +6,7 @@ var Twitter = require('node-twitter-api');
 var bodyParser = require('body-parser');
 var session = require('express-session');
 var FileStore = require('session-file-store')(session);
+var https = require('https');
 require('express-helpers')(app);
 app.enable('trust proxy');
 var port = process.env.PORT || 3000;
@@ -20,7 +21,8 @@ if(port === 3000) {
 		twitterConsumerKey: process.env.twitterConsumerKey,
 		twitterConsumerSecret: process.env.twitterConsumerSecret,
 		callbackUrl: process.env.callbackUrl,
-		sessionSecret: process.env.sessionSecret
+		sessionSecret: process.env.sessionSecret,
+		googleBooksApiKey: process.env.googleBooksApiKey
 	};
 }
 
@@ -139,13 +141,68 @@ app.get('/new-book', function(req, res) {
 
 // add new book to the database
 app.post('/new-book', function(req, res) {
-	Book.create({ title: req.body.title }, function(err) {
-		if(err) {
-			console.log(err);
-		} else {
-			res.render('newbook.ejs', { userInfo: req.session.userInfo });
-		}
-	})
+	var idResponse;
+	var title = req.body.title;
+
+	// send request to google books api to obtain google book id using title
+	https.get('https://www.googleapis.com/books/v1/volumes?q=intitle:' + title + '&key=' + config.googleBooksApiKey, function(response) {
+		response.setEncoding('utf8');
+		response.on('data', function(chunk) {
+			if(idResponse) {
+				// if there is already data, concat new data
+				idResponse += chunk;
+			} else {
+				// if there isn't any data, set first data
+				idResponse = chunk;
+			}
+		});
+
+		response.on('end', function() {
+			var responseObj = JSON.parse(idResponse);
+			var id = responseObj.items[0].id;
+
+			// send request to google books api to obtain book data using google book id
+			https.get('https://www.googleapis.com/books/v1/volumes/' + id + '?key=' + config.googleBooksApiKey, function(response) {
+				var metaResponse;
+
+				response.setEncoding('utf8');
+				response.on('data', function(chunk) {
+					if(metaResponse) {
+						// if there is already data, concat new data
+						metaResponse += chunk;
+					} else {
+						// if there isn't any data, set first data
+						metaResponse = chunk;
+					}
+				});
+
+				response.on('end', function() {
+					var metaResponseObj = JSON.parse(metaResponse);
+					var title = metaResponseObj.volumeInfo.title;
+					var imageUrl = metaResponseObj.volumeInfo.imageLinks.thumbnail;
+					var owner = req.session.userInfo['screen_name'];
+
+					// create new book document using book data
+					Book.create({ title: title, imageUrl: imageUrl, owner: owner }, function(err) {
+						if(err) {
+							console.log(err);
+						} else {
+							// send user back to new book page
+							res.render('newbook.ejs', { userInfo: req.session.userInfo });
+						}
+					});
+
+				});
+
+			}).on('error', function(err) {
+				console.log(err);
+			});
+
+		});
+	}).on('error', function(err) {
+		console.log(err);
+	});
+
 });
 
 // shows all of a user's trades
