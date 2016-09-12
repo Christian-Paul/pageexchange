@@ -24,6 +24,15 @@
 						<div class="book">
 							<img class='book-cover' src=<%- books[i].imageUrl %> >
 							<div class="book-title"> <%- books[i].title %> </div>
+							<% if(userInfo && userInfo.hasOwnProperty('screen_name') && books[i].tradeInfo.status === 'none' && books[i].owner !== userInfo['screen_name']) { %>
+								<!-- 
+									if the user is logged in and the book isn't currently being traded
+									and the book doesn't belong to the current user
+									show request trade button 
+								-->
+								<a href=<%- 'request-trade/' + books[i]._id %> class="request-trade">Request Trade</a>
+
+							<% } %>
 						</div>
 
 						<% } %>

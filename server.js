@@ -50,8 +50,8 @@ var bookSchema = new Schema({
 	imageUrl: String,
 	owner: String,
 	tradeInfo: {
-		sender: String,
-		status: String
+		sender: { type: String, default: 'none'},
+		status: { type: String, default: 'none' }
 	}
 });
 
@@ -242,6 +242,23 @@ app.post('/new-book', function(req, res) {
 	}).on('error', function(err) {
 		console.log(err);
 	});
+});
+
+// request a trade
+app.get('/request-trade/:tagId', function(req, res) {
+
+	var updateObj = {
+		status: 'pending',
+		sender: req.session.userInfo.screen_name
+	};
+
+	Book.findByIdAndUpdate( req.params.tagId, { $set: { tradeInfo: updateObj } }, function(err){
+		if(err) {
+			console.log(err);
+		} else {
+			res.redirect('/');
+		}
+	})
 });
 
 // shows all of a user's trades
